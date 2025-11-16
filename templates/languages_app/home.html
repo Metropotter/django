@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Programming Languages{% endblock %}
+
+{% block content %}
+<h1>Programming Languages</h1>
+<p class="lead">Explore different programming languages and their features.</p>
+
+<div class="row">
+    {% for language in languages %}
+    <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card language-card">
+            <div class="card-body text-center">
+                {% if language.logo %}
+                <img src="{{ language.logo.url }}" alt="{{ language.name }} logo" 
+                     class="img-fluid mb-3" style="height: 80px;">
+                {% else %}
+                <div class="bg-light mb-3" style="height: 80px; display: flex; align-items: center; justify-content: center;">
+                    <span class="text-muted">No logo</span>
+                </div>
+                {% endif %}
+                <h5 class="card-title">{{ language.name }}</h5>
+                <p class="text-muted">Created: {{ language.year_created }}</p>
+                <span class="badge bg-info">{{ language.get_main_application_area_display }}</span>
+                
+                <!-- VIEW COUNT -->
+                <div class="mt-2">
+                    <small class="text-muted">
+                        <i class="fas fa-eye"></i> {{ language.view_count }} views
+                    </small>
+                </div>
+                
+                <div class="mt-3">
+                    <a href="{% url 'languages_app:language_detail' language.id %}" 
+                       class="btn btn-primary btn-sm">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <p class="text-muted">No languages available yet.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
