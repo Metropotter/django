@@ -28,3 +28,19 @@ class Language(models.Model):
     
     class Meta:
         ordering = ['name']
+class SiteVisitor(models.Model):
+    total_visitors = models.IntegerField(default=0)
+    last_updated = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return f"Total Visitors: {self.total_visitors}"
+    
+    def increment_visitors(self):
+        self.total_visitors += 1
+        self.save()
+    
+    @classmethod
+    def get_visitor_count(cls):
+        """Get or create the singleton visitor counter"""
+        obj, created = cls.objects.get_or_create(id=1)
+        return obj
