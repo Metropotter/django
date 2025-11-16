@@ -28,6 +28,7 @@ class Language(models.Model):
     
     class Meta:
         ordering = ['name']
+
 class SiteVisitor(models.Model):
     total_visitors = models.IntegerField(default=0)
     last_updated = models.DateTimeField(auto_now=True)
@@ -35,9 +36,12 @@ class SiteVisitor(models.Model):
     def __str__(self):
         return f"Total Visitors: {self.total_visitors}"
     
-    def increment_visitors(self):
-        self.total_visitors += 1
-        self.save()
+    def increment_visitors(self, request):  # FIX: Add 'self' as first parameter
+        """Count only once per session"""
+        if not request.session.get('has_been_counted'):
+            self.total_visitors += 1
+            self.save()
+            request.session['has_been_counted'] = True
     
     @classmethod
     def get_visitor_count(cls):

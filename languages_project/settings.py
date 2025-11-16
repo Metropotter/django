@@ -48,7 +48,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'languages_app.middleware.VisitorCounterMiddleware',
 ]
 
 ROOT_URLCONF = 'languages_project.urls'
@@ -63,6 +62,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'languages_app.context_processors.visitor_count',
             ],
         },
     },

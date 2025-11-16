@@ -1,9 +1,11 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Language
+from .models import SiteVisitor
 
 
 def home(request):
     languages = Language.objects.all()
+    SiteVisitor.get_visitor_count().increment_visitors(request)  # ADD request
     return render(request, 'languages_app/home.html', {'languages': languages})
 
 
@@ -12,6 +14,7 @@ def language_detail(request, language_id):
 
     # INCREMENT VIEW COUNT when someone visits the page
     language.increment_view_count()
+    SiteVisitor.get_visitor_count().increment_visitors(request)  # ADD request
 
     return render(request, 'languages_app/language_detail.html', {'language': language})
 
@@ -21,6 +24,7 @@ def popular_languages(request):
 
     # Get languages ordered by view count (most popular first)
     popular_langs = Language.objects.all().order_by('-view_count')[:5]
+    SiteVisitor.get_visitor_count().increment_visitors(request)  # ADD request
 
     return render(request, 'languages_app/popular_languages.html', {
         'languages': popular_langs,
