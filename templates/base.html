@@ -10,9 +10,13 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
-            <a class="navbar-brand" href="{% url 'languages_app:home' %}">
-                <strong>Languages Guide</strong>
-            </a>
+        <a class="navbar-brand" href="{% url 'languages_app:home' %}">
+            <strong>Languages Guide</strong>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
             <div class="navbar-nav me-auto">
                 <a class="nav-link" href="{% url 'languages_app:home' %}">All Languages</a>
                 <a class="nav-link" href="{% url 'languages_app:popular_languages' %}">Popular</a>
@@ -21,6 +25,9 @@
             <div class="navbar-nav">
                 {% if user.is_authenticated %}
                     <span class="navbar-text me-3">Hello, {{ user.username }}</span>
+                    {% if user.is_superuser %}
+                        <a class="nav-link" href="/admin/">Admin Portal</a>
+                    {% endif %}
                     <a class="nav-link" href="{% url 'languages_app:user_logout' %}">Logout</a>
                 {% else %}
                     <a class="nav-link" href="{% url 'languages_app:user_login' %}">Login</a>
@@ -28,6 +35,7 @@
                 {% endif %}
             </div>
         </div>
+    </div>
 </nav>
 
     <div class="container mt-4">
