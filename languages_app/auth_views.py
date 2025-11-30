@@ -32,9 +32,14 @@ def user_login(request):
         user = authenticate(request, username=username, password=password)
         
         if user is not None:
-            # Skip email verification check
+            # Skip email verification check - direct login
             login(request, user)
-            return redirect('languages_app:forum_home')
+            
+            # Redirect superusers to admin, regular users to forum
+            if user.is_superuser:
+                return redirect('/admin/')  # Superusers go to admin
+            else:
+                return redirect('languages_app:forum_home')  # Regular users go to forum
         else:
             messages.error(request, 'Invalid username or password.')
     
