@@ -62,7 +62,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'languages_app.context_processors.visitor_count', 
             ],
         },
     },
@@ -76,10 +75,20 @@ WSGI_APPLICATION = 'languages_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'languages_db',           
+        'USER': 'postgres',                
+        'PASSWORD': 'postgres',                
+        'HOST': 'localhost',               
+        'PORT': '5432',                    
     }
 }
+
+# Optional: Keep SQLite as secondary database for reference
+# DATABASES['sqlite'] = {
+#     'ENGINE': 'django.db.backends.sqlite3',
+#     'NAME': BASE_DIR / 'db.sqlite3',
+# }
 
 
 # Password validation
